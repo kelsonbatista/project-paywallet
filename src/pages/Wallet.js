@@ -5,8 +5,18 @@ import '../assets/styles/Wallet.css';
 import MyWalletLogo from '../assets/images/mywallet2.jpeg';
 
 class Carteira extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      totalExpenses: 0,
+      currentCurrency: 'BRL',
+    };
+  }
+
   render() {
     const { email } = this.props;
+    const { totalExpenses, currentCurrency } = this.state;
 
     return (
       <>
@@ -14,8 +24,9 @@ class Carteira extends Component {
           <section className="header">
             <img src={ MyWalletLogo } alt="My Wallet Logo" className="header__logo" />
             <div className="header__right">
-              <span>{ `Email: ${email}` }</span>
-              <span>{ `Despesa Total: ${null}` }</span>
+              <span data-testid="email-field">{ `Email: ${email}` }</span>
+              <span data-testid="total-field">{ `Despesa Total: ${totalExpenses}` }</span>
+              <span data-testid="header-currency-field">{ currentCurrency }</span>
             </div>
           </section>
           <section className="control">
