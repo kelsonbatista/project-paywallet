@@ -18,11 +18,8 @@ class Header extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      currencyName: 'Dólar Americano',
       method: 'Dinheiro',
       tag: tagValue,
-      ask: 0,
-      totalItem: 0,
     };
   }
 
@@ -33,18 +30,6 @@ class Header extends Component {
 
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
-    const total = document.querySelector('#currency');
-    const value = document.querySelector('#value');
-    const ask = total.options[total.selectedIndex]
-      .getAttribute('data-ask');
-    const currencyName = total.options[total.selectedIndex]
-      .getAttribute('data-currencyname').split('/')[0];
-    // console.log(currencyName);
-    this.setState({
-      ask, // (Math.round(ask * 100) / 100)
-      totalItem: (Number(value.value) * ask).toFixed(2),
-      currencyName,
-    });
   }
 
   handleSubmit = async () => {
@@ -54,12 +39,13 @@ class Header extends Component {
       value,
       description,
       currency,
-      currencyName,
       method,
       tag,
-      ask,
-      totalItem,
     } = this.state;
+
+    const total = document.querySelector('#currency');
+    const ask = total.options[total.selectedIndex]
+      .getAttribute('data-ask');
 
     this.setState((prevState) => ({
       id: prevState.id + 1,
@@ -71,11 +57,8 @@ class Header extends Component {
       value,
       description,
       currency,
-      currencyName,
       method,
       tag,
-      ask,
-      totalItem,
       exchangeRates: await exchangeRatesAPI(),
       // precisou chamar novamente a requisicao direto da API para guardar o objeto
     };
