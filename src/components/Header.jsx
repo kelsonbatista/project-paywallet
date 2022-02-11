@@ -6,6 +6,7 @@ import MyWalletLogo from '../assets/images/mywallet2.jpeg';
 import { getCurrencies, addExpenses } from '../actions/walletActions';
 import exchangeRatesAPI from '../services/exchangeRatesAPI';
 
+const tagValue = 'Alimentação';
 class Header extends Component {
   constructor() {
     super();
@@ -16,10 +17,11 @@ class Header extends Component {
       id: 0,
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: tagValue,
       ask: 0,
+      totalItem: 0,
     };
   }
 
@@ -31,8 +33,12 @@ class Header extends Component {
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
     const total = document.querySelector('#currency');
+    const value = document.querySelector('#value');
     const ask = total.options[total.selectedIndex].getAttribute('data-ask');
-    this.setState({ ask });
+    this.setState({
+      ask, // (Math.round(ask * 100) / 100)
+      totalItem: (Number(value.value) * ask).toFixed(2),
+    });
   }
 
   handleSubmit = async () => {
@@ -45,6 +51,7 @@ class Header extends Component {
       method,
       tag,
       ask,
+      totalItem,
     } = this.state;
 
     this.setState((prevState) => ({
@@ -59,6 +66,8 @@ class Header extends Component {
       currency,
       method,
       tag,
+      ask,
+      totalItem,
       exchangeRates: await exchangeRatesAPI(),
       // precisou chamar novamente a requisicao direto da API para guardar o objeto
     };
@@ -69,8 +78,8 @@ class Header extends Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: tagValue,
     });
   }
 
@@ -93,7 +102,9 @@ class Header extends Component {
           <img src={ MyWalletLogo } alt="My Wallet Logo" className="header__logo" />
           <div className="header__right">
             <span data-testid="email-field">{ `Email: ${email}` }</span>
-            <span data-testid="total-field">{ `Despesa Total: ${totalExpenses.toFixed(2)}` }</span>
+            <span data-testid="total-field">
+              { `Despesa Total: ${totalExpenses.toFixed(2)}` }
+            </span>
             <span data-testid="header-currency-field">{ refCurrency }</span>
           </div>
         </section>
@@ -177,7 +188,7 @@ class Header extends Component {
           </label>
           <button
             type="submit"
-            id="control-button"
+            id="button"
             onClick={ this.handleSubmit }
           >
             Adicionar despesa

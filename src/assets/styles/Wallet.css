@@ -15,19 +15,53 @@
 }
 
 .control {
+  align-items: flex-end;
   background: #444;
   color: white;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
   padding: 10px;
 }
 
-.table {
-  top: 0;
+.control label {
+  font-size: 0.8rem;
+  margin-left: 10px;
 }
 
-.table__title {
-  background: #888;
+.control input {
+  height: 1.4rem;
+  margin-left: 5px;
+}
+
+.control input#value {
+  max-width: 60px;
+  width: 70%;
+}
+
+.control input#description {
+  width:250px;
+}
+
+.control select {
+  height: 1.75rem;
+  margin-left: 5px;
+  min-width: 80px;
+}
+
+.control button {
+  background: rgb(82, 80, 199);
+  border: none;
   color: white;
-  font-size: 12px;
-  margin-top: 15px;
-  padding: 7px;
+  margin-left: 5px;
+  min-width: 8rem;
+  padding: 0.41rem;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  text-align: center;
 }

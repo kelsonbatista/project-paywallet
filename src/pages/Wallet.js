@@ -1,39 +1,59 @@
-// import propTypes from 'prop-types';
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Table from 'react-bootstrap/Table';
 import '../assets/styles/Wallet.css';
 import Header from '../components/Header';
 
 class Carteira extends Component {
-  // constructor() {
-  //   super();
-
-  // }
-
   render() {
+    const { expenses } = this.props;
+
     return (
       <>
         <Header />
-        <main>
-          <section className="table">
-            <span className="table__title">Descrição</span>
-            <span className="table__title">Tag</span>
-            <span className="table__title">Método de Pagamento</span>
-            <span className="table__title">Valor</span>
-            <span className="table__title">Moeda</span>
-            <span className="table__title">Câmbio utilizado</span>
-            <span className="table__title">Valor convertido</span>
-            <span className="table__title">Moeda de conversão</span>
-            <span className="table__title">Editar/Excluir</span>
-          </section>
-        </main>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map((expense, index) => (
+              <tr key={ index }>
+                <td>{expense.description}</td>
+                <td>{expense.tag}</td>
+                <td>{expense.method}</td>
+                <td>{expense.value}</td>
+                <td>{expense.currency}</td>
+                <td>{expense.ask}</td>
+                <td>{expense.totalItem}</td>
+                <td>BRL</td>
+                <td>Editar/Excluir</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </>
     );
   }
 }
 
-// Carteira.propTypes = {
-//   email: propTypes.string,
-// }.isRequired;
+Carteira.propTypes = {
+  email: propTypes.string,
+  expenses: propTypes.object,
+}.isRequired;
 
-export default Carteira;
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps, null)(Carteira);
