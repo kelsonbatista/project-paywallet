@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getEmail } from '../actions';
+import { addUserEmail } from '../actions/userActions';
 import '../assets/styles/Login.css';
 import walletLogo from '../assets/images/mywallet.jpeg';
 
@@ -34,14 +34,13 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { email } = this.state;
-    const { history, getEmailDispatch } = this.props;
-    getEmailDispatch(email);
+    const { history, emailDispatch } = this.props;
+    emailDispatch(email);
     history.push('/carteira');
   }
 
   validatePassword = (password) => {
     const MAX_PWD_LENGTH = 6;
-    console.log(password.length + 1);
     return (password.length + 1) < MAX_PWD_LENGTH;
   }
 
@@ -103,7 +102,7 @@ Login.propTypes = {
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
-  getEmailDispatch: (email) => dispatch(getEmail(email)),
+  emailDispatch: (email) => dispatch(addUserEmail(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
