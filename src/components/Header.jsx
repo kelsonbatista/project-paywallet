@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import '../assets/styles/Wallet.css';
 import MyWalletLogo from '../assets/images/mywallet2.jpeg';
 import { getCurrencies, addExpenses } from '../actions/walletActions';
+import exchangeRatesAPI from '../services/exchangeRatesAPI';
 
 class Header extends Component {
   constructor() {
@@ -15,23 +16,27 @@ class Header extends Component {
       id: 0,
       value: 0,
       description: '',
-      currency: 'USD',
+      currency: '',
       method: '',
       tag: '',
+      ask: 0,
     };
   }
 
   componentDidMount() {
     const { getAllCurrencies } = this.props;
-    getAllCurrencies();
+    getAllCurrencies(); // executa para enviar ao estado global
   }
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value });
+    const total = document.querySelector('#currency');
+    const ask = total.options[total.selectedIndex].getAttribute('data-ask');
+    this.setState({ ask });
   }
 
-  handleSubmit = () => {
-    const { currencies, expensesDispatch } = this.props;
+  handleSubmit = async () => {
+    const { expensesDispatch } = this.props;
     const {
       id,
       value,
@@ -39,11 +44,12 @@ class Header extends Component {
       currency,
       method,
       tag,
+      ask,
     } = this.state;
 
     this.setState((prevState) => ({
       id: prevState.id + 1,
-      totalExpenses: prevState.totalExpenses + parseInt(value, 10),
+      totalExpenses: prevState.totalExpenses + (value * ask),
     }));
 
     const expenses = {
@@ -53,7 +59,8 @@ class Header extends Component {
       currency,
       method,
       tag,
-      exchangeRates: currencies,
+      exchangeRates: await exchangeRatesAPI(),
+      // precisou chamar novamente a requisicao direto da API para guardar o objeto
     };
 
     expensesDispatch(expenses);
@@ -73,12 +80,12 @@ class Header extends Component {
       totalExpenses,
       refCurrency,
       value,
+      description,
       currency,
       method,
       tag,
-      description,
     } = this.state;
-    // console.log(Object.keys(currencies));
+    // console.log(Object.values(currencies));
 
     return (
       <header>
@@ -86,81 +93,82 @@ class Header extends Component {
           <img src={ MyWalletLogo } alt="My Wallet Logo" className="header__logo" />
           <div className="header__right">
             <span data-testid="email-field">{ `Email: ${email}` }</span>
-            <span data-testid="total-field">{ `Despesa Total: ${totalExpenses}` }</span>
+            <span data-testid="total-field">{ `Despesa Total: ${totalExpenses.toFixed(2)}` }</span>
             <span data-testid="header-currency-field">{ refCurrency }</span>
           </div>
         </section>
         <section className="control">
-          <label htmlFor="control-value">
+          <label htmlFor="value" id="value-label">
             Valor:
             <input
               type="number"
-              id="control-value"
+              id="value"
               name="value"
               data-testid="value-input"
               value={ value }
               onChange={ this.handleChange }
             />
           </label>
-          <label htmlFor="control-currency">
+          <label htmlFor="currency" id="currency-label">
             Moeda:
             <select
               type="text"
-              id="control-currency"
+              id="currency"
               name="currency"
               data-testid="currency-input"
               value={ currency }
               onChange={ this.handleChange }
             >
-              { Object.keys(currencies)
-                .filter((rate) => rate !== 'USDT')
+              { Object.values(currencies)
+                .filter((rate) => rate.codein !== 'BRLT')
                 .map((rate, index) => (
                   <option
                     key={ index }
-                    data-testid={ rate }
+                    data-testid={ rate.code }
+                    data-ask={ rate.ask }
                   >
-                    { rate }
+                    { rate.code }
                   </option>
                 ))}
             </select>
           </label>
-          <label htmlFor="control-payment">
+          <label htmlFor="payment" id="payment-label">
             Método de pagamento:
             <select
               type="text"
-              id="control-payment"
+              id="payment"
               name="method"
               data-testid="method-input"
               value={ method }
               onChange={ this.handleChange }
             >
-              <option value="Dinheiro" selected>Dinheiro</option>
+              <option value="Dinheiro">Dinheiro</option>
               <option value="Cartão de crédito">Cartão de crédito</option>
               <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="control-tag">
+          <label htmlFor="tag" id="tag-label">
             Tag:
             <select
               type="text"
-              id="control-tag"
+              id="tag"
               name="tag"
               data-testid="tag-input"
               value={ tag }
               onChange={ this.handleChange }
             >
-              <option value="Alimentação" selected>Alimentação</option>
+              <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
               <option value="Transporte">Transporte</option>
               <option value="Saúde">Saúde</option>
             </select>
           </label>
-          <label htmlFor="control-description">
+          <label htmlFor="description" id="description-label">
             Descrição:
             <input
               type="text"
-              id="control-description"
+              id="description"
               name="description"
               data-testid="description-input"
               value={ description }

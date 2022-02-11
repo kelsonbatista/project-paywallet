@@ -16,7 +16,9 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case ADD_EXPENSES:
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [...state.expenses, action.payload],
+      // nesse item preciso adicionar tudo o que ja existe em expenses para adicionar um novo item
+      // fazer spread dentro do expenses serve para acumular valores toda vez que é adicionado
     };
   default:
     return state;
