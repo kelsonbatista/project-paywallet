@@ -124,6 +124,7 @@ class Header extends Component {
               id="value"
               name="value"
               data-testid="value-input"
+              className="value-input"
               value={ value }
               onChange={ this.handleChange }
             />
@@ -191,6 +192,7 @@ class Header extends Component {
               id="description"
               name="description"
               data-testid="description-input"
+              className="description-input"
               value={ description }
               onChange={ this.handleChange }
             />
