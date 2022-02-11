@@ -113,9 +113,11 @@ class Header extends Component {
               onChange={ this.handleChange }
             >
               { Object.keys(currencies)
+                .filter((rate) => rate !== 'USDT')
                 .map((rate, index) => (
                   <option
                     key={ index }
+                    data-testid={ rate }
                   >
                     { rate }
                   </option>
