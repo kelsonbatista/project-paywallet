@@ -18,6 +18,7 @@ class Header extends Component {
       value: 0,
       description: '',
       currency: 'USD',
+      currencyName: 'Dólar Americano',
       method: 'Dinheiro',
       tag: tagValue,
       ask: 0,
@@ -34,10 +35,15 @@ class Header extends Component {
     this.setState({ [target.name]: target.value });
     const total = document.querySelector('#currency');
     const value = document.querySelector('#value');
-    const ask = total.options[total.selectedIndex].getAttribute('data-ask');
+    const ask = total.options[total.selectedIndex]
+      .getAttribute('data-ask');
+    const currencyName = total.options[total.selectedIndex]
+      .getAttribute('data-currencyname').split('/')[0];
+    // console.log(currencyName);
     this.setState({
       ask, // (Math.round(ask * 100) / 100)
       totalItem: (Number(value.value) * ask).toFixed(2),
+      currencyName,
     });
   }
 
@@ -48,6 +54,7 @@ class Header extends Component {
       value,
       description,
       currency,
+      currencyName,
       method,
       tag,
       ask,
@@ -64,6 +71,7 @@ class Header extends Component {
       value,
       description,
       currency,
+      currencyName,
       method,
       tag,
       ask,
@@ -137,6 +145,7 @@ class Header extends Component {
                     key={ index }
                     data-testid={ rate.code }
                     data-ask={ rate.ask }
+                    data-currencyname={ rate.name }
                   >
                     { rate.code }
                   </option>

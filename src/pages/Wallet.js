@@ -27,16 +27,16 @@ class Carteira extends Component {
             </tr>
           </thead>
           <tbody>
-            { expenses.map((expense, index) => (
+            { expenses.map((exp, index) => (
               <tr key={ index }>
-                <td>{expense.description}</td>
-                <td>{expense.tag}</td>
-                <td>{expense.method}</td>
-                <td>{expense.value}</td>
-                <td>{expense.currency}</td>
-                <td>{expense.ask}</td>
-                <td>{expense.totalItem}</td>
-                <td>BRL</td>
+                <td>{exp.description}</td>
+                <td>{exp.tag}</td>
+                <td>{exp.method}</td>
+                <td>{Number(exp.value).toFixed(2)}</td>
+                <td>{exp.exchangeRates[exp.currency].name}</td>
+                <td>{Number(exp.exchangeRates[exp.currency].ask).toFixed(2)}</td>
+                <td>{ (exp.value * (exp.exchangeRates[exp.currency].ask)).toFixed(2)}</td>
+                <td>Real</td>
                 <td>Editar/Excluir</td>
               </tr>
             ))}
