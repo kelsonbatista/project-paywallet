@@ -75,7 +75,7 @@ td {
 }
 
 .btn-delete {
-  background: rgb(255, 0, 0);
+  background: red;
   border: none;
   border-radius: 5px;
   color: white;
