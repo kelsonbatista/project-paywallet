@@ -12,8 +12,6 @@ class Header extends Component {
     super();
 
     this.state = {
-      totalExpenses: 0,
-      refCurrency: 'BRL',
       id: 0,
       value: 0,
       description: '',
@@ -43,13 +41,8 @@ class Header extends Component {
       tag,
     } = this.state;
 
-    const total = document.querySelector('#currency');
-    const ask = total.options[total.selectedIndex]
-      .getAttribute('data-ask');
-
     this.setState((prevState) => ({
       id: prevState.id + 1,
-      totalExpenses: prevState.totalExpenses + (value * ask),
     }));
 
     const expenses = {
@@ -64,6 +57,7 @@ class Header extends Component {
     };
 
     expensesDispatch(expenses);
+    console.log(expenses, 'header - submit');
 
     this.setState({
       value: 0,
@@ -74,11 +68,16 @@ class Header extends Component {
     });
   }
 
+  updateTotal = () => {
+    const { expenses } = this.props;
+    // console.log(expenses);
+    return expenses.reduce((prev, exp) => prev + (Number(exp.value)
+    * exp.exchangeRates[exp.currency].ask), 0);
+  }
+
   render() {
     const { email, currencies } = this.props;
     const {
-      totalExpenses,
-      refCurrency,
       value,
       description,
       currency,
@@ -87,6 +86,8 @@ class Header extends Component {
     } = this.state;
     // console.log(Object.values(currencies));
 
+    const totalExpenses = this.updateTotal();
+
     return (
       <header>
         <section className="header">
@@ -94,9 +95,10 @@ class Header extends Component {
           <div className="header__right">
             <span data-testid="email-field">{ `Email: ${email}` }</span>
             <span data-testid="total-field">
-              { `Despesa Total: ${totalExpenses.toFixed(2)}` }
+              Despesa Total:&nbsp;
+              { totalExpenses.toFixed(2) }
             </span>
-            <span data-testid="header-currency-field">{ refCurrency }</span>
+            <span data-testid="header-currency-field">BRL</span>
           </div>
         </section>
         <section className="control">
@@ -203,6 +205,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -66,7 +66,7 @@ describe('3 - Crie um header para a página de carteira contendo as seguintes ca
   });
 });
 
-describe.only('4 - Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+describe('4 - Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
   test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId(VALUE_INPUT_TEST_ID);
@@ -258,7 +258,7 @@ describe('7 - Implemente a lógica para que a tabela seja alimentada pelo estado
   });
 });
 
-describe('8 - Crie um botão para deletar uma despesa da tabela contendo as seguintes características:', () => {
+describe.only('8 - Crie um botão para deletar uma despesa da tabela contendo as seguintes características:', () => {
   const initial = initialStateWithExpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="delete-btn"`', () => {

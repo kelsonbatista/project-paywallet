@@ -2,6 +2,7 @@ import exchangeRatesAPI from '../services/exchangeRatesAPI';
 // Coloque aqui suas actions
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
 
 export const addCurrencies = (payload) => ({
   type: ADD_CURRENCIES,
@@ -10,6 +11,11 @@ export const addCurrencies = (payload) => ({
 
 export const addExpenses = (payload) => ({
   type: ADD_EXPENSES,
+  payload,
+});
+
+export const removeExpenses = (payload) => ({
+  type: REMOVE_EXPENSES,
   payload,
 });
 

@@ -65,3 +65,16 @@ table {
 td {
   text-align: center;
 }
+
+.btn-delete {
+  background: rgb(255, 0, 0);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  padding: 8px 10px;
+}
+
+.btn-delete:hover {
+  background: rgb(167, 0, 0);
+}

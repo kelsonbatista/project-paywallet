@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Table from 'react-bootstrap/Table';
 import '../assets/styles/Wallet.css';
 import Header from '../components/Header';
+import { removeExpenses } from '../actions/walletActions';
 
 class Carteira extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, handleDelete } = this.props;
 
     return (
       <>
@@ -37,7 +40,16 @@ class Carteira extends Component {
                 <td>{Number(exp.exchangeRates[exp.currency].ask).toFixed(2)}</td>
                 <td>{ (exp.value * (exp.exchangeRates[exp.currency].ask)).toFixed(2)}</td>
                 <td>Real</td>
-                <td>Editar/Excluir</td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn-delete"
+                    data-testid="delete-btn"
+                    onClick={ () => handleDelete(exp.id) }
+                  >
+                    <FontAwesomeIcon icon={ faTrashCan } />
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -56,4 +68,8 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps, null)(Carteira);
+const mapDispatchToProps = (dispatch) => ({
+  handleDelete: (index) => dispatch(removeExpenses(index)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Carteira);
