@@ -24,6 +24,10 @@
   padding: 10px;
 }
 
+.control-edit {
+  background: green;
+}
+
 .control label {
   font-size: 0.8rem;
   margin-left: 10px;
@@ -49,13 +53,17 @@
   min-width: 80px;
 }
 
-.control button {
+.control-btn {
   background: rgb(82, 80, 199);
   border: none;
   color: white;
   margin-left: 5px;
   min-width: 8rem;
   padding: 0.41rem;
+}
+
+.control-btn-edit {
+  background: goldenrod;
 }
 
 table {
@@ -72,9 +80,24 @@ td {
   border-radius: 5px;
   color: white;
   cursor: pointer;
+  margin-right: 4px;
   padding: 8px 10px;
 }
 
 .btn-delete:hover {
   background: rgb(167, 0, 0);
+}
+
+.btn-edit {
+  background: limegreen;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-left: 4px;
+  padding: 8px 10px;
+}
+
+.btn-edit:hover {
+  background: rgb(27, 177, 27);
 }

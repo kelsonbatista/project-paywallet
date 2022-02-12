@@ -24,7 +24,27 @@ class Header extends Component {
   componentDidMount() {
     const { getAllCurrencies } = this.props;
     getAllCurrencies(); // executa para enviar ao estado global
+    // this.editField();
   }
+
+  // editField = () => {
+  //   const { edit, expenses } = this.props;
+
+  //   if (edit.isEditing) {
+  //     const item = expenses[edit.itemIndex];
+  //     console.log(item);
+  //     this.setState({
+  //       id: item.id,
+  //       value: item.value,
+  //       description: item.description,
+  //       currency: item.currency,
+  //       method: item.method,
+  //       tag: item.tag,
+  //     });
+  //   } else {
+  //     console.log('nao esta em edicao');
+  //   }
+  // }
 
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
@@ -76,7 +96,12 @@ class Header extends Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
+    const {
+      email,
+      currencies,
+      // edit,
+    } = this.props;
+
     const {
       value,
       description,
@@ -102,6 +127,7 @@ class Header extends Component {
           </div>
         </section>
         <section className="control">
+          {/* { `control ${edit.isEditing && 'control-edit'}` } */}
           <label htmlFor="value" id="value-label">
             Valor:
             <input
@@ -185,8 +211,11 @@ class Header extends Component {
           <button
             type="submit"
             id="button"
+            className="control-btn"
             onClick={ this.handleSubmit }
           >
+            {/* { `control-btn ${edit.isEditing && 'control-btn-edit'}` } */}
+            {/* { edit.isEditing ? 'Editar despesa' : 'Adicionar despesa' } */}
             Adicionar despesa
           </button>
         </section>
@@ -198,14 +227,15 @@ class Header extends Component {
 Header.propTypes = {
   email: propTypes.string,
   currencies: propTypes.object,
-  getAllCurrencies: propTypes.func,
-  expensesDispatch: propTypes.func,
+  expenses: propTypes.object,
+  edit: propTypes.object,
 }.isRequired;
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  edit: state.wallet.edit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
