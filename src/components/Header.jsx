@@ -5,6 +5,7 @@ import '../assets/styles/Wallet.css';
 import MyWalletLogo from '../assets/images/mywallet2.jpeg';
 import { getCurrencies, addExpenses } from '../actions/walletActions';
 import exchangeRatesAPI from '../services/exchangeRatesAPI';
+import ControlForm from './ControlForm';
 
 const tagValue = 'Alimentação';
 class Header extends Component {
@@ -98,17 +99,17 @@ class Header extends Component {
   render() {
     const {
       email,
-      currencies,
+      // currencies,
       // edit,
     } = this.props;
 
-    const {
-      value,
-      description,
-      currency,
-      method,
-      tag,
-    } = this.state;
+    // const {
+    //   value,
+    //   description,
+    //   currency,
+    //   method,
+    //   tag,
+    // } = this.state;
     // console.log(Object.values(currencies));
 
     const totalExpenses = this.updateTotal();
@@ -126,99 +127,12 @@ class Header extends Component {
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </section>
-        <section className="control">
-          {/* { `control ${edit.isEditing && 'control-edit'}` } */}
-          <label htmlFor="value" id="value-label">
-            Valor:
-            <input
-              type="number"
-              id="value"
-              name="value"
-              data-testid="value-input"
-              className="value-input"
-              value={ value }
-              onChange={ this.handleChange }
-            />
-          </label>
-          <label htmlFor="currency" id="currency-label">
-            Moeda:
-            <select
-              type="text"
-              id="currency"
-              name="currency"
-              data-testid="currency-input"
-              value={ currency }
-              onChange={ this.handleChange }
-            >
-              { Object.values(currencies)
-                .filter((rate) => rate.codein !== 'BRLT')
-                .map((rate, index) => (
-                  <option
-                    key={ index }
-                    data-testid={ rate.code }
-                    data-ask={ rate.ask }
-                    data-currencyname={ rate.name }
-                  >
-                    { rate.code }
-                  </option>
-                ))}
-            </select>
-          </label>
-          <label htmlFor="payment" id="payment-label">
-            Método de pagamento:
-            <select
-              type="text"
-              id="payment"
-              name="method"
-              data-testid="method-input"
-              value={ method }
-              onChange={ this.handleChange }
-            >
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag" id="tag-label">
-            Tag:
-            <select
-              type="text"
-              id="tag"
-              name="tag"
-              data-testid="tag-input"
-              value={ tag }
-              onChange={ this.handleChange }
-            >
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </select>
-          </label>
-          <label htmlFor="description" id="description-label">
-            Descrição:
-            <input
-              type="text"
-              id="description"
-              name="description"
-              data-testid="description-input"
-              className="description-input"
-              value={ description }
-              onChange={ this.handleChange }
-            />
-          </label>
-          <button
-            type="submit"
-            id="button"
-            className="control-btn"
-            onClick={ this.handleSubmit }
-          >
-            {/* { `control-btn ${edit.isEditing && 'control-btn-edit'}` } */}
-            {/* { edit.isEditing ? 'Editar despesa' : 'Adicionar despesa' } */}
-            Adicionar despesa
-          </button>
-        </section>
+        <ControlForm
+          headerState={ this.state }
+          headerProps={ this.props }
+          onChange={ this.handleChange }
+          onClick={ this.handleSubmit }
+        />
       </header>
     );
   }
