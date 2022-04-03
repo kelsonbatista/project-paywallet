@@ -33,7 +33,7 @@ class Carteira extends Component {
     return (
       <>
         <Header />
-        <Table striped bordered hover>
+        <Table striped bordered hover variant="dark" size="sm">
           <thead>
             <tr>
               <th>Descrição</th>
