@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/project-paywallet/static/css/main.84f5358c.chunk.css",
+    "main.js": "/project-paywallet/static/js/main.c49110a6.chunk.js",
+    "main.js.map": "/project-paywallet/static/js/main.c49110a6.chunk.js.map",
+    "runtime-main.js": "/project-paywallet/static/js/runtime-main.dbc5f35c.js",
+    "runtime-main.js.map": "/project-paywallet/static/js/runtime-main.dbc5f35c.js.map",
+    "static/js/2.d1419509.chunk.js": "/project-paywallet/static/js/2.d1419509.chunk.js",
+    "static/js/2.d1419509.chunk.js.map": "/project-paywallet/static/js/2.d1419509.chunk.js.map",
+    "index.html": "/project-paywallet/index.html",
+    "precache-manifest.6d18c035dd11500f29ca7066b8ff83f9.js": "/project-paywallet/precache-manifest.6d18c035dd11500f29ca7066b8ff83f9.js",
+    "service-worker.js": "/project-paywallet/service-worker.js",
+    "static/css/main.84f5358c.chunk.css.map": "/project-paywallet/static/css/main.84f5358c.chunk.css.map",
+    "static/js/2.d1419509.chunk.js.LICENSE.txt": "/project-paywallet/static/js/2.d1419509.chunk.js.LICENSE.txt",
+    "static/media/mywallet.jpeg": "/project-paywallet/static/media/mywallet.217c0234.jpeg",
+    "static/media/mywallet2.jpeg": "/project-paywallet/static/media/mywallet2.79df28b6.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dbc5f35c.js",
+    "static/js/2.d1419509.chunk.js",
+    "static/css/main.84f5358c.chunk.css",
+    "static/js/main.c49110a6.chunk.js"
+  ]
+}
