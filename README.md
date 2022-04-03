@@ -11,6 +11,7 @@ This project is a virtual wallet to store the user's financial data.
  - React
  - Redux (store/reducers)
  - Local Storage
+ - API requests / *Requisições API*
 
 ---
 # Layout
